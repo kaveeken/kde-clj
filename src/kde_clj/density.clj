@@ -1,6 +1,6 @@
 (in-ns 'kde-clj.core)
 
-(load-file "src/kde_clj/utility.clj")
+(load "utility")
 
 (defn kernel-density-factory
   [kernel data bandwidth]
