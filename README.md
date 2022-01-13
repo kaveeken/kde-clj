@@ -1,6 +1,9 @@
 # kde-clj
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to perform kernel density estimation.
+I needed an implementation that gave easy access to the derivative of
+the density estimation.
+I wanted an implementation that was my own.
 
 ## Usage
 
