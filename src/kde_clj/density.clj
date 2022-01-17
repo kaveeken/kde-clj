@@ -32,11 +32,11 @@
          density (map kde x)]
      (c/scatter-plot x density))))
 
-(defn integrate-analytical
-  ([kernel data a b]
-   (integrate-kde kernel data a b (pick-bandwidth data)))
-  ([kernel data a b bandwidth]
-   (let [kde-integral (kernel-density-factory kernel data bandwidth)]
-     (- (kde-integral b)
-        (kde-integral a)))))
+;;(defn integrate-analytical
+;;  ([kernel data a b]
+;;   (integrate-analytical kernel data a b (pick-bandwidth data)))
+;;  ([kernel data a b bandwidth]
+;;   (let [kde-integral (kernel-density-factory kernel data bandwidth)]
+;;     (- (kde-integral b)
+;;        (kde-integral a)))))
 
