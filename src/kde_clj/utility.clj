@@ -41,6 +41,16 @@
   ([data]
    (pick-space data 1000))
   ([data n]
-   (linspace (apply min data)
-             (apply max data)
+   (linspace (* 0.9 (apply min data))
+             (* 1.1 (apply max data))
              n)))
+
+(defn integrate
+  ([f a b dx]
+   (integrate f a b dx 0))
+  ([f a b dx sum]
+   (if (> a b)
+     sum
+     (let [new-a (+ a dx)
+           result (* (f new-a) dx)]
+     (integrate f new-a b dx (+ sum result))))))
