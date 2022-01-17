@@ -25,6 +25,41 @@
         (- x xi)
         (* -2 (- xi x))))) ;; (xi-x)^3 + (x-xi) -2(xi-x)
 
+(defn error-function-approx
+  [x]
+  (let [a1 0.278393
+        a2 0.230389
+        a3 0.000972
+        a4 0.078108
+        sum (+ 1
+               (* a1 x)
+               (* a2 x x)
+               (* a3 x x x)
+               (* a4 x x x x))
+        denom (* sum sum sum sum)]
+    (- 1 (/ 1 denom))))
+
+(defn error-function-approx-2
+  [x]
+  (let [p 0.3275911
+        a1 0.254829592
+        a2 -0.284496736
+        a3 1.421413741
+        a4 -1.453152027
+        a5 1.061405429
+        t (/ 1 (+ 1 (* p x)))
+        sum (+ (* a1 t)
+               (* a2 t t)
+               (* a3 t t t)
+               (* a4 t t t t)
+               (* a5 t t t t t))]
+        (- 1 (* sum (Math/exp (- (* x x)))))))
+
+(defn kernel-gauss-integral
+  [x xi]
+  (* 1/2
+     (error-function-approx-2 (/ (- x xi) (Math/sqrt 2)))))
+
 ;; these seem to turn everything into a unimodal distribution
 (defn kernel-parabolic
   [u]
