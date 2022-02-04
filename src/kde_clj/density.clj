@@ -21,7 +21,7 @@
   ([kernel data bandwidth]
    (let [kde (kernel-density-factory kernel data bandwidth)
          x (pick-space data)]
-   (map kde x))))
+   (pmap kde x))))
 
 (defn build-density-plot
   ([kernel data]
@@ -29,7 +29,7 @@
   ([kernel data bandwidth]
    (let [kde (kernel-density-factory kernel data bandwidth)
          x (pick-space data)
-         density (map kde x)]
+         density (pmap kde x)]
      (c/scatter-plot x density))))
 
 ;;(defn integrate-analytical
@@ -51,7 +51,7 @@
          x (range (apply min data) (apply max data) dx)]
      {:dx dx
       :x x
-      :d (map kde x)})))
+      :d (pmap kde x)})))
 
 (defn plot-integrable-density
   [integrable]
