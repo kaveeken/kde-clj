@@ -40,3 +40,32 @@
 ;;     (- (kde-integral b)
 ;;        (kde-integral a)))))
 
+
+(defn build-integrable-density
+  "Computes the density of a given set of `data` and returns it in a
+  format to be numerically integrated with step size `dx`."
+  ([kernel data dx]
+   (build-integrable-density kernel data dx (pick-bandwidth data)))
+  ([kernel data dx bandwidth]
+   (let [kde (kernel-density-factory kernel data bandwidth)
+         x (range (apply min data) (apply max data) dx)]
+     {:dx dx
+      :x x
+      :d (map kde x)})))
+
+(defn plot-integrable-density
+  [integrable]
+  (c/scatter-plot (:x integrable) (:d integrable)))
+
+(defn integrate-integrable-density
+  "Numerically integrates an 'integrable' density as returned by
+  `build-integrable-density`."
+  [integrable from to]
+  (let [dx (:dx integrable)
+        ;; off-by-one errors on numerical inaccuracies?
+        from-index (int (quot (- from (first (:x integrable))) dx))
+        to-index (int (quot (- to (first (:x integrable))) dx))
+        n (- to-index from-index)
+        n-from (- (count (:x integrable)) from-index)
+        values (take n (take-last n-from (:d integrable)))]
+    (apply + (map #(* dx %) values))))
